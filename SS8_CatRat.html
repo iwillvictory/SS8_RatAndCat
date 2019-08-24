@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat catch R</title>
+</head>
+<body>
+    <script>
+        function Rat(name,weight,speed){
+            this.name=name;
+            this.weight=weight;
+            this.speed=speed;
+            this.status=true;
+            this.getName=function () {
+                return this.name;
+            };
+            this.getWeight=function () {
+                return weight;
+            };
+            this.isLive=function () {
+                return this.status;
+            };
+            this.killed=function () {
+                this.status=false;
+            };
+            this.getSpeed=function () {
+                return this.speed;
+            };
+            this.sound=function () {
+                return this.name +": chit chit chit";
+            }
+        }
+
+        function Cat(name,weight,maxSpeed){
+            this.name=name;
+            this.weight=weight;
+            this.maxSpeed=maxSpeed;
+            this.speed=0;
+            this.catchedRats=[];
+            this.eatedRats=[];
+            this.getName=function () {
+                return this.name;
+            };
+            this.setSpeed=function (speed) {
+                if(speed < this.maxSpeed){
+                    this.speed = speed;
+                }
+            };
+            this.sound=function () {
+                return "meo meo meo";
+            };
+            this.catchRat=function (rat) {
+                  if(this.speed > rat.getSpeed()){
+                      this.catchedRats.push(rat);
+                  }
+            };
+            
+            this.eatRats=function () {
+               while(this.catchedRats.length >0){
+                     let rat = this.catchedRats.pop();
+                     if(rat.isLive()){
+                         alert(rat.sound())
+                        this.eatedRats.push(rat);
+                        rat.killed();
+                        this.weight +=rat.getWeight();
+                    }
+                }
+
+            };
+
+            this.getWeight=function () {
+                return this.weight;
+            };
+            this.showCatchRats=function () {
+                let listRats="[";
+                for(let rat of this.catchedRats){
+                    listRats +=", " + rat.getName();
+                }
+                listRats+= "]";
+                return listRats;
+            };
+            this.showEatenRats=function () {
+                let listRats="[";
+                for(let rat of this.eatedRats){
+                    listRats +=", " + rat.getName();
+                }
+                listRats+="]";
+                return listRats;
+            }
+
+        }
+
+        /////////////////Programm////////////////
+
+        let rat1= new Rat("mickey",2,20);
+        let rat2= new Rat("jerry",1,30);
+        let rat3= new Rat("cong",2,40);
+        let rat4= new Rat("join",2,20);
+        let rat5= new Rat("like",1,30);
+        let rat6= new Rat("mike",2,40);
+
+        let cat1= new Cat("Tom",8,60);
+        cat1.setSpeed(35);
+        alert("Cân nặng của mèo hiện tại lại: "+ cat1.getWeight());
+        alert(cat1.sound());
+        cat1.catchRat(rat1);
+        alert(cat1.sound());
+        cat1.catchRat(rat2);
+        alert(cat1.sound());
+        cat1.catchRat(rat3);
+        alert(cat1.sound());
+        cat1.catchRat(rat4);
+        alert(cat1.sound());
+        cat1.catchRat(rat5);
+        alert(cat1.sound());
+        cat1.catchRat(rat6);
+
+        alert("Các con chuột bị " + cat1.getName() + " bắt là: \n " + cat1.showCatchRats());
+
+        cat1.eatRats();
+        alert("Các con chuột bị " + cat1.getName() + " ăn là: \n " + cat1.showEatenRats());
+
+        alert("Cân nặng của mèo hiện tại lại: "+ cat1.getWeight());
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>
